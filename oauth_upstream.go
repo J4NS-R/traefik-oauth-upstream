@@ -1,5 +1,5 @@
 // Package main a demo plugin.
-package main
+package traefik_oauth_upstream
 
 import (
 	"context"
@@ -31,7 +31,7 @@ type OauthUpstream struct {
 // New created a new Demo plugin.
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	if config.ClientId == "" || config.ClientSecret == "" || config.AuthUrl == "" || config.TokenUrl == "" || config.PersistDir == "" {
-		return nil, fmt.Errorf("All of the following config must be defined: clientId, clientSecret, authUrl, tokenUrl, persistDir")
+		return nil, fmt.Errorf("Error loading traefik_oauth_upstream plugin: All of the following config must be defined: clientId, clientSecret, authUrl, tokenUrl, persistDir")
 	}
 
 	return &OauthUpstream{

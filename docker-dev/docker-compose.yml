@@ -11,7 +11,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik-dev.yml:/traefik.yml:ro
       - ./dynamic-config:/rules:ro
-      - ../:/plugins-local/src/github.com/Koellewe/traefik-oauth-upstream
+      - ..:/plugins-local/src/github.com/Koellewe/traefik-oauth-upstream:ro
+      - ./oauth:/tmp/oauth_persist
     networks:
       - proxy
     labels:
@@ -26,8 +27,8 @@ services:
     labels:
       - "traefik.enable=true"
       # - "traefik.http.services.whoami.loadbalancer.server.port=80"
-      - "traefik.http.routers.whoami.middlewares=demomid@file"
-      - "traefik.http.routers.whoami.rule=Host(`*`)"
+      - "traefik.http.routers.whoami.middlewares=oauthup@file"
+      - "traefik.http.routers.whoami.rule=HostRegexp(`{subdomain:.+}.gitpod.io`)"
 
 networks:
   proxy:

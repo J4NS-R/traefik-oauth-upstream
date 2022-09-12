@@ -14,7 +14,7 @@ log:
 
 experimental:
   localPlugins:
-    traefik-oauth-upstream:
+    traefik_oauth_upstream:
       moduleName: github.com/Koellewe/traefik-oauth-upstream
   plugins:
     demoplugin:

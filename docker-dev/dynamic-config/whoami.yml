@@ -2,9 +2,12 @@ http:
   middlewares:
     oauthup:
       plugin:
-        traefik-oauth-upstream:
+        traefik_oauth_upstream:
           clientId: "clientId"
           clientSecret: "clientSecret"
+          authUrl: https://example.org/auth
+          tokenUrl: https://example.org/token
+          persistDir: /tmp/oauth_persist
     demomid:
       plugin:
         demoplugin:

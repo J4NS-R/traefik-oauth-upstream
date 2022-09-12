@@ -1,4 +1,4 @@
-package main
+package traefik_oauth_upstream
 
 import (
 	"encoding/json"
@@ -36,7 +36,10 @@ func LoadTokenData(persistDir string) (*TokenData, error) {
 	if err != nil {
 		return nil, err
 	}
-	var tokenData *TokenData
-	err = json.Unmarshal(encoded, tokenData)
-	return tokenData, err
+	tokenData := TokenData{}
+	err = json.Unmarshal(encoded, &tokenData)
+	if err != nil {
+		return nil, err
+	}
+	return &tokenData, nil
 }

@@ -7,6 +7,8 @@ import: github.com/Koellewe/traefik-oauth-upstream
 summary: 'Manage upstream OAuth by doing token auth, and refreshing said token automatically.'
 
 testData:
-  Headers:
-    X-Demo: test
-    X-URL: '{{URL}}'
+  clientId: derp
+  clientSecret: durp
+  authUrl: https://example.org/auth
+  tokenUrl: https://example.org/token
+  persistDir: /tmp
