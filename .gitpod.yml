@@ -1,7 +1,7 @@
 
 tasks:
   - init: make
-    command: go run
+    command: cd docker-dev && docker-compose up -d
 
 
 

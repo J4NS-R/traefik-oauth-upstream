@@ -8,3 +8,15 @@ providers:
   file:
     directory: /rules
     watch: true
+
+log:
+  level: DEBUG
+
+experimental:
+  localPlugins:
+    traefik-oauth-upstream:
+      moduleName: github.com/Koellewe/traefik-oauth-upstream
+  plugins:
+    demoplugin:
+      moduleName: github.com/traefik/plugindemo
+      version: v0.2.1

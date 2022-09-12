@@ -1,4 +1,4 @@
-// Package traefik_oauth_upstream a demo plugin.
+// Package main a demo plugin.
 package main
 
 import (

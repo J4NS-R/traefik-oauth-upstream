@@ -1,6 +1,12 @@
 http:
-  routers:
-    whoami:
-      entryPoints:
-        - http
-
+  middlewares:
+    oauthup:
+      plugin:
+        traefik-oauth-upstream:
+          clientId: "clientId"
+          clientSecret: "clientSecret"
+    demomid:
+      plugin:
+        demoplugin:
+          headers:
+            Foo: Bar
