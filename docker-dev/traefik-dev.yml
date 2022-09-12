@@ -1,0 +1,10 @@
+entryPoints:
+  http:
+    address: ":80"
+
+providers:
+  docker: {}
+
+  file:
+    directory: /rules
+    watch: true

@@ -1,4 +1,4 @@
-package traefik_oauth_upstream_test
+package main_test
 
 import (
 	"context"

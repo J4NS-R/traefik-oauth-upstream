@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik
+    command:
+      - --providers.docker=true
+    ports:
+      - 3000:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik-dev.yml:/traefik.yml:ro
+      - ./dynamic-config:/rules:ro
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+
+  whoami:
+    image: whoami
+    expose:
+      - 80
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+
+networks:
+  proxy:

@@ -1,0 +1,6 @@
+http:
+  routers:
+    whoami:
+      entryPoints:
+        - http
+

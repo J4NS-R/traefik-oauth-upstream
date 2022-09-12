@@ -1,66 +1,70 @@
 // Package traefik_oauth_upstream a demo plugin.
-package traefik_oauth_upstream
+package main
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"net/http"
-	"text/template"
 )
 
 // Config - the plugin configuration.
 type Config struct {
-	Headers map[string]string `json:"headers,omitempty"`
+	ClientId     string `json:"clientId"`
+	ClientSecret string `json:"clientSecret"`
+	AuthUrl      string `json:"authUrl"`
+	TokenUrl     string `json:"tokenUrl"`
+	PersistDir   string `json:"persistDir"`
 }
 
 // CreateConfig - creates the default plugin configuration.
 func CreateConfig() *Config {
-	return &Config{
-		Headers: make(map[string]string),
-	}
+	return &Config{}
 }
 
 // Demo a Demo plugin.
-type Demo struct {
-	next     http.Handler
-	headers  map[string]string
-	name     string
-	template *template.Template
+type OauthUpstream struct {
+	next   http.Handler
+	config *Config
+	name   string
 }
 
 // New created a new Demo plugin.
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
-	if len(config.Headers) == 0 {
-		return nil, fmt.Errorf("headers cannot be empty")
+	if config.ClientId == "" || config.ClientSecret == "" || config.AuthUrl == "" || config.TokenUrl == "" || config.PersistDir == "" {
+		return nil, fmt.Errorf("All of the following config must be defined: clientId, clientSecret, authUrl, tokenUrl, persistDir")
 	}
 
-	return &Demo{
-		headers:  config.Headers,
-		next:     next,
-		name:     name,
-		template: template.New("demo").Delims("[[", "]]"),
+	return &OauthUpstream{
+		config: config,
+		next:   next,
+		name:   name,
 	}, nil
 }
 
-func (a *Demo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	for key, value := range a.headers {
-		tmpl, err := a.template.Parse(value)
-		if err != nil {
-			http.Error(rw, err.Error(), http.StatusInternalServerError)
-			return
-		}
+func (a *OauthUpstream) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 
-		writer := &bytes.Buffer{}
-
-		err = tmpl.Execute(writer, req)
-		if err != nil {
-			http.Error(rw, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		req.Header.Set(key, writer.String())
+	tokenExists, err := TokenDataExists(a.config.PersistDir)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
+	if !tokenExists {
+		// TODO return 302 auth redirect
+		http.Error(rw, "This should be a 302 to the authUrl", http.StatusNotImplemented)
+		return
+	}
+
+	tokenData, err := LoadTokenData(a.config.PersistDir)
+	if err != nil {
+		http.Error(rw, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// TODO: check token expiry, and refresh if necessary
+
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenData.Token))
+
+	// pass down the middleware chain
 	a.next.ServeHTTP(rw, req)
 }
