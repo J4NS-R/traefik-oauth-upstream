@@ -1,0 +1,10 @@
+
+tasks:
+  - init: make
+    command: go run
+
+
+
+vscode:
+  extensions:
+    - golang.go

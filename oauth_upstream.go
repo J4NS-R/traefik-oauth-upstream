@@ -1,5 +1,5 @@
-// Package plugindemo a demo plugin.
-package plugindemo
+// Package traefik_oauth_upstream a demo plugin.
+package traefik_oauth_upstream
 
 import (
 	"bytes"
@@ -9,12 +9,12 @@ import (
 	"text/template"
 )
 
-// Config the plugin configuration.
+// Config - the plugin configuration.
 type Config struct {
 	Headers map[string]string `json:"headers,omitempty"`
 }
 
-// CreateConfig creates the default plugin configuration.
+// CreateConfig - creates the default plugin configuration.
 func CreateConfig() *Config {
 	return &Config{
 		Headers: make(map[string]string),

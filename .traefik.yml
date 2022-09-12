@@ -1,10 +1,10 @@
-displayName: Demo Plugin
+displayName: Upstream OAuth
 type: middleware
-iconPath: .assets/icon.png
+# iconPath: .assets/icon.png
 
-import: github.com/traefik/plugindemo
+import: github.com/Koellewe/traefik-oauth-upstream
 
-summary: '[Demo] Add Request Header'
+summary: 'Manage upstream OAuth by doing token auth, and refreshing said token automatically.'
 
 testData:
   Headers:

@@ -1,4 +1,4 @@
-package plugindemo_test
+package traefik_oauth_upstream_test
 
 import (
 	"context"

@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: go/src/github.com/${{ github.repository }}
-          fetch-depth: 0
+          fetch-depth: 1
 
       # https://github.com/marketplace/actions/cache
       - name: Cache Go modules
@@ -58,7 +58,7 @@ jobs:
         run: |
           go mod tidy
           git diff --exit-code go.mod
-          # git diff --exit-code go.sum
+          git diff --exit-code go.sum
           go mod download
           go mod vendor
           # git diff --exit-code ./vendor/
