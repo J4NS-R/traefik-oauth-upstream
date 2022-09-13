@@ -8,15 +8,11 @@ import (
 	"math"
 	"os"
 	"time"
+
+	"golang.org/x/oauth2"
 )
 
 const TOKEN_DATA_FILENAME = "token_data.json"
-
-type TokenData struct {
-	Token        string `json:"token"`
-	RefreshToken string `json:"refreshToken"`
-	RefreshUnix  int64  `json:"refreshUnix"`
-}
 
 func TokenDataExists(persistDir string) (bool, error) {
 	if _, err := os.Stat(fmt.Sprintf("%s/%s", persistDir, TOKEN_DATA_FILENAME)); err == nil {
@@ -29,17 +25,17 @@ func TokenDataExists(persistDir string) (bool, error) {
 	}
 }
 
-func Persist(tokenData *TokenData, persistDir string) {
+func Persist(tokenData *oauth2.Token, persistDir string) {
 	encoded, _ := json.Marshal(tokenData)
 	_ = ioutil.WriteFile(fmt.Sprintf("%s/%s", persistDir, TOKEN_DATA_FILENAME), encoded, 0600)
 }
 
-func LoadTokenData(persistDir string) (*TokenData, error) {
+func LoadTokenData(persistDir string) (*oauth2.Token, error) {
 	encoded, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", persistDir, TOKEN_DATA_FILENAME))
 	if err != nil {
 		return nil, err
 	}
-	tokenData := TokenData{}
+	tokenData := oauth2.Token{}
 	err = json.Unmarshal(encoded, &tokenData)
 	if err != nil {
 		return nil, err

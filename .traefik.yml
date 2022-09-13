@@ -7,8 +7,11 @@ import: github.com/Koellewe/traefik-oauth-upstream
 summary: 'Manage upstream OAuth by doing token auth, and refreshing said token automatically.'
 
 testData:
-  clientId: derp
-  clientSecret: durp
-  authUrl: https://example.org/auth
-  tokenUrl: https://example.org/token
-  persistDir: /tmp
+  clientId: "clientId"
+  clientSecret: "clientSecret"
+  authUrl: https://accounts.google.com/o/oauth2/v2/auth
+  tokenUrl: https://oauth2.googleapis.com/token
+  persistDir: /tmp/oauth_persist
+  scopes:
+    - "https://www.googleapis.com/auth/calendar.readonly"
+    - "https://www.googleapis.com/auth/calendar.events.readonly"

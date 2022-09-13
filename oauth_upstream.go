@@ -69,13 +69,7 @@ func (a *OauthUpstream) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 			http.Error(rw, "Failed to exchange auth code: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-
-		persistToken := &TokenData{
-			Token:        token.AccessToken,
-			RefreshToken: token.RefreshToken,
-			RefreshUnix:  CalcRefreshTimestamp(token.Expiry.Unix()),
-		}
-		Persist(persistToken, a.persistDir)
+		Persist(token, a.persistDir)
 
 		rw.WriteHeader(http.StatusOK)
 		rw.Header().Add("Content-Type", "text/html")
@@ -105,9 +99,14 @@ func (a *OauthUpstream) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// TODO: check token expiry, and refresh if necessary
+	tokenSource := a.config.TokenSource(oauth2.NoContext, tokenData)
+	token, err := tokenSource.Token()
+	if err != nil {
+		http.Error(rw, "Failed to refresh token: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", tokenData.Token))
+	token.SetAuthHeader(req)
 
 	// pass down the middleware chain
 	a.next.ServeHTTP(rw, req)
