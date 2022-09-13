@@ -2,10 +2,17 @@
 tasks:
   - init: make
     command: cd docker-dev && docker-compose up -d
-
-
+  - name: "Set up custom secret oauth config"
+    before: mkdir -p docker-dev/dynamic-config
+    command: |
+      cp docker-dev/dynamic-config-example/oauthup.yml docker-dev/dynamic-config/
+      sed -i -e "s/CLIENT_ID_PLACEHOLDER/$OAUTH_CLIENTID/" -e "s/CLIENT_SECRET_PLACEHOLDER/$OAUTH_CLIENT_SECRET/" docker-dev/dynamic-config/oauthup.yml
 
 vscode:
   extensions:
     - golang.go
     - ms-azuretools.vscode-docker
+
+ports:
+  - port: 3000
+    onOpen: open-preview

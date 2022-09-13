@@ -5,7 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"os"
+	"time"
 )
 
 const TOKEN_DATA_FILENAME = "token_data.json"
@@ -13,6 +15,7 @@ const TOKEN_DATA_FILENAME = "token_data.json"
 type TokenData struct {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken"`
+	RefreshUnix  int64  `json:"refreshUnix"`
 }
 
 func TokenDataExists(persistDir string) (bool, error) {
@@ -42,4 +45,10 @@ func LoadTokenData(persistDir string) (*TokenData, error) {
 		return nil, err
 	}
 	return &tokenData, nil
+}
+
+func CalcRefreshTimestamp(expiryUnix int64) int64 {
+	nowUnix := time.Now().Unix()
+	diff := expiryUnix - nowUnix
+	return nowUnix + int64(math.Round(0.9*float64(diff)))
 }

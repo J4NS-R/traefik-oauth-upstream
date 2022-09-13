@@ -2,3 +2,4 @@
 .DS_Store
 vendor/
 docker-dev/oauth/
+docker-dev/dynamic-config/
