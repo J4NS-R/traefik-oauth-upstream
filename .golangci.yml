@@ -52,6 +52,7 @@ linters:
     - gomnd
     - forbidigo
     - varnamelen
+    - nosnakecase  # package is traefik_oauth_upstream
 
 issues:
   exclude-use-default: false
