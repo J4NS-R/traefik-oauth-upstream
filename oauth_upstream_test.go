@@ -13,10 +13,10 @@ import (
 
 func TestBlankRedirect(t *testing.T) {
 	cfg := traefik_oauth_upstream.CreateConfig()
-	cfg.ClientId = "cid"
+	cfg.ClientID = "cid"
 	cfg.ClientSecret = "csec"
-	cfg.AuthUrl = "https://auth.example.org/auth"
-	cfg.TokenUrl = "https://auth.example.org/auth"
+	cfg.AuthURL = "https://auth.example.org/auth"
+	cfg.TokenURL = "https://auth.example.org/auth"
 	cfg.PersistDir = "/tmp/oauth_persist"
 	cfg.Scopes = []string{"profile"}
 

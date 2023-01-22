@@ -53,6 +53,7 @@ linters:
     - forbidigo
     - varnamelen
     - nosnakecase  # package is traefik_oauth_upstream
+    - gofumpt  # requires go 1.18
 
 issues:
   exclude-use-default: false
