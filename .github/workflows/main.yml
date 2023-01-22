@@ -65,7 +65,7 @@ jobs:
 
       - name: SnakeCase issue
         run: |
-          snakey=$(golangci-lint linters | grep "nosnakecase" | wc -l)
+          snakey=$(golangci-lint help linters | grep "nosnakecase" | wc -l)
           if [ "$snakey" -ne 1 ]; then
             sed -i '/nosnakecase/d' .golangci.yml
           fi
