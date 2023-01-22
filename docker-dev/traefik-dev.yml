@@ -1,0 +1,22 @@
+entryPoints:
+  http:
+    address: ":80"
+
+providers:
+  docker: {}
+
+  file:
+    directory: /rules
+    watch: true
+
+log:
+  level: DEBUG
+
+experimental:
+  localPlugins:
+    traefik_oauth_upstream:
+      moduleName: github.com/Koellewe/traefik-oauth-upstream
+  plugins:
+    demoplugin:
+      moduleName: github.com/traefik/plugindemo
+      version: v0.2.1

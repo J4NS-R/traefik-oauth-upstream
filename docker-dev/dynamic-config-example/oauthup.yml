@@ -1,0 +1,13 @@
+http:
+  middlewares:
+    oauthup:
+      plugin:
+        traefik_oauth_upstream:
+          clientId: "CLIENT_ID_PLACEHOLDER"
+          clientSecret: "CLIENT_SECRET_PLACEHOLDER"
+          authUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          persistDir: /tmp/oauth_persist
+          scopes:
+            - "https://www.googleapis.com/auth/calendar.readonly"
+            - "https://www.googleapis.com/auth/calendar.events.readonly"

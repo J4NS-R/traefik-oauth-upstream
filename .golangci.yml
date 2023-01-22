@@ -52,6 +52,9 @@ linters:
     - gomnd
     - forbidigo
     - varnamelen
+    - nosnakecase  # deprecated
+    - gofumpt  # requires go 1.18
+    - nolintlint  # too meta
 
 issues:
   exclude-use-default: false
