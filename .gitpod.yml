@@ -1,5 +1,6 @@
 
 tasks:
+  - init: go install golang.org/dl/go1.17.13@latest && go1.17.13 download && rm $(which go) && ln -s $(which go1.17.13) /home/gitpod/go/bin/go
   - init: make
     command: cd docker-dev && docker-compose up -d
   - name: "Set up custom secret oauth config"

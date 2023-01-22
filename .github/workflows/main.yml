@@ -63,6 +63,13 @@ jobs:
           go mod vendor
           # git diff --exit-code ./vendor/
 
+      - name: SnakeCase issue
+        run: |
+          snakey=$(golangci-lint linters | grep "nosnakecase" | wc -l)
+          if [ "$snakey" -ne 1 ]; then
+            sed -i '/nosnakecase/d' .golangci.yml
+          fi
+
       - name: Lint and Tests
         run: make
 
