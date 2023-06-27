@@ -1,7 +1,7 @@
 # Upstream OAuth - Traefik Middleare
 
 This middleware adds OAuth headers to your requests so that for the upstream (service) the request is  
-OAuth-authenticated. With other middleware you can configure any kind of downstream (client) authentication 
+OAuth-authenticated. Using other middleware layers you can configure any kind of downstream (client) authentication 
 (E.g., [Basic Auth](https://doc.traefik.io/traefik/middlewares/http/basicauth/)) or leave it open to the
 internet! (not recommended)
 
