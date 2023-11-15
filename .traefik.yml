@@ -2,7 +2,7 @@ displayName: Upstream OAuth
 type: middleware
 # iconPath: .assets/icon.png
 
-import: github.com/Koellewe/traefik-oauth-upstream
+import: github.com/J4NS-R/traefik-oauth-upstream
 
 summary: 'Manage upstream OAuth by doing token auth, and refreshing said token automatically.'
 

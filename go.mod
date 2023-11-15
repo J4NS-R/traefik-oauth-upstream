@@ -1,4 +1,4 @@
-module github.com/Koellewe/traefik-oauth-upstream
+module github.com/J4NS-R/traefik-oauth-upstream
 
 go 1.17
 
